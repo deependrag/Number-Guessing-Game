@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Guessing Game</title>
+	<style type="text/css">
+		h1{
+			color:#00ffff;
+			text-align: center;
+		}
+		input[type = "number"]{
+			border-radius: 5px;
+			border-color: #bdc7d8;
+			box-shadow: none;
+			font-size: 18px;
+			padding: 8px 15px;
+			margin: 10px 0 0 80px;
+		}
+		#gue {
+			margin-top: 20px;
+			margin-left: 80px;
+			width: 250px;
+			cursor: pointer;
+		}
+		input[type = "password"]{
+			border-radius: 5px;
+			border-color: #bdc7d8;
+			box-shadow: none;
+			font-size: 18px;
+			padding: 8px 15px;
+			margin: 10px 0 0 80px;
+		}
+		/*.box {
+			background-color: #282828;
+
+			height: 400px;
+			width: 600px;
+			margin: 50px 525px;
+			padding-top: 40px;
+		}*/
+		.form {
+			padding: 0 450px;
+		}
+		button {
+			height: 40px;
+			background-color: #00ffff;
+			color: #282828;
+			font-size: 20px;
+			font-weight: 300;
+			border-radius: 10px;
+			margin-left: 5px;
+			margin-top: 10px;
+			cursor: pointer;
+		}
+	</style>
+	<script type="text/javascript">
+
+	var count = 0;
+	function doGet(){
+		var random = document.getElementById("random").value;
+  		var guess = document.getElementById("guess").value;
+  		if(random == "") {
+  			alert("Click on Generate to generate Random Number");
+  		}else if(guess == "") {
+  			alert("Please Guess a number");
+  		}else {
+  			doCheck(random, guess);
+  		}
+	}
+
+	function getRandom() {
+		var lowerLimit=(Math.ceil(document.getElementById("lower").value));
+		var upperLimit=(Math.ceil(document.getElementById("upper").value));
+		if(lowerLimit == " " || upperLimit == " ") {
+  			alert("Please Enter value in Upper limit and Lower limit");
+  		}else{
+  			
+  			var random = Math.ceil(Math.random() * (upperLimit - lowerLimit)) + lowerLimit;
+			document.getElementById("random").value=random;
+			document.getElementById("lower").readOnly=true;
+  			document.getElementById("upper").readOnly=true;
+  		}
+	}
+
+	function doCheck(random, guess) {
+		var lowerLimit=(Math.ceil(document.getElementById("lower").value));
+		var upperLimit=(Math.ceil(document.getElementById("upper").value));
+		if(random==guess) {
+			alert("Your guess is right");
+			reset();
+		}else if (guess<lowerLimit || guess > upperLimit){
+			alert("Guess the number between range");
+		}else if(random>guess){
+			alert("Your guess is wrong. Guess Higher");
+			document.getElementById("try").value=("Try: " + count);
+		}else {
+			alert("Your guess is wrong. Guess lower");
+			document.getElementById("try").value=("Try: " + count);
+		}
+	}
+
+	function reset() {
+		document.getElementById("lower").value=null;
+		document.getElementById("lower").readOnly=false;
+  		document.getElementById("upper").value=null;
+  		document.getElementById("upper").readOnly=false;
+  		document.getElementById("guess").value=null;
+  		document.getElementById("random").value=null;
+	}
+
+	function count() {
+		count++;
+	}
+	</script>
+	<h1> Welcome To Guessing Game </h1>
+</head>
+<body bgcolor="#282828">
+<div class="container">
+	<div class="form">
+		<h3 id="try"> </h3>
+		<input type="number" id="lower" placeholder="Lower Limit"><br>
+		<input type="number" id="upper" placeholder="Upper Limit"><br>
+		<input type="password" id="random" placeholder="Random Number" readonly> <button onclick="getRandom()">Generate</button><br>
+		<input type="number" id="guess" placeholder="Guess a Number"><br>
+		<button id="gue" onclick="doGet()">Guess</button>
+		<button onclick="reset()">Reset</button>
+	</div>
+</div>
+</body>
+</html>
